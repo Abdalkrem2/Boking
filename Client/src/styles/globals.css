@@ -1,0 +1,111 @@
+/* main font setting */
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap");
+/* main tailwind setting */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* .swiper-pagination-bullet {
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border: 4px solid #7100f7;
+  opacity: 1;
+} */
+:root {
+  --product-rgb: 255, 0, 0; /* Fallback */
+}
+body {
+  font-family: "Cairo", sans-serif;
+  overflow-x: hidden;
+  background-color: #1f2227;
+}
+html {
+  scroll-behavior: smooth;
+}
+.swiper-pagination-bullet {
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border: 4px solid #ffe600;
+  opacity: 1;
+}
+.pagination {
+  margin-top: 8px;
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+.pagination li {
+  border: 2px solid rgb(224, 224, 224);
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+.pagination .active {
+  background-color: skyblue;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-out;
+}
+.pagination-item {
+  @apply inline-flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-md text-gray-200 hover:text-black
+  hover:bg-gray-100 transition-colors duration-200 cursor-pointer;
+}
+
+.pagination-nav {
+  @apply inline-flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-md text-gray-200
+  hover:bg-gray-100 transition-colors duration-200 cursor-pointer text-lg;
+}
+
+.pagination-active {
+  @apply bg-main-color text-black hover:bg-main-color/90;
+}
+
+.pagination-disabled {
+  @apply opacity-50 cursor-not-allowed hover:bg-transparent text-gray-400;
+}
+@keyframes expand {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+.animate-expand {
+  animation: expand 0.6s ease-in-out;
+}
+
+.animate-ripple {
+  animation: ripple 0.6s ease-out;
+  opacity: 1;
+}
