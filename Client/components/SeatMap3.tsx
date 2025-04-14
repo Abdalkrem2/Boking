@@ -14,7 +14,7 @@ interface SeatMap2Props {
   TYPE_COLORS: { id: number; value: string; name: string }[];
 }
 
-const SeatMap3: React.FC<SeatMap2Props> = ({
+const SeatMap5: React.FC<SeatMap2Props> = ({
   seats = [],
   onSeatSelect,
   selectedSeats = [],
@@ -23,7 +23,6 @@ const SeatMap3: React.FC<SeatMap2Props> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredSeat, setHoveredSeat] = useState<Seat | null>(null);
   const [containerWidth, setContainerWidth] = useState(0);
-  const [zoomLevel, setZoomLevel] = useState(0.25);
 
   // Generate sample seats if none provided (for demonstration)
   const getSeats = () => {
@@ -196,42 +195,17 @@ const SeatMap3: React.FC<SeatMap2Props> = ({
   }, [seats]);
 
   // Determine the scale factor based on container width
-  const scale = Math.max(0.5, Math.min(1, containerWidth / 1000)) * zoomLevel;
+  const scale = Math.max(0.5, Math.min(1, containerWidth / 1000));
 
   // Calculate seat size based on scale
   const seatSize = Math.max(16, Math.round(20 * scale));
   const seatSpacing = Math.max(2, Math.round(4 * scale));
 
-  // Handle zoom in/out
-  const handleZoomIn = () => {
-    setZoomLevel((prev) => Math.min(prev + 0.1, 1.5));
-  };
-
-  const handleZoomOut = () => {
-    setZoomLevel((prev) => Math.max(prev - 0.1, 0.25));
-  };
-
   return (
     <div className="flex flex-col items-center w-full" ref={containerRef}>
-      {/* Zoom controls */}
-      <div className="mb-2 flex justify-end w-full">
-        <button
-          onClick={handleZoomOut}
-          className=" text-complement-color bg-white px-3 py-1  hover:bg-gray-200 text-xl font-bold"
-        >
-          -
-        </button>
-        <button
-          onClick={handleZoomIn}
-          className=" text-complement-color bg-white px-3 py-1  hover:bg-gray-200 ml-px text-xl font-bold"
-        >
-          +
-        </button>
-      </div>
-
-      <div className="w-full bg-gray-900 p-2 md:p-4 rounded-lg overflow-hidden">
+      <div className="w-full bg-gray-900 p-2 md:p-4 rounded-lg overflow-hidden h-72">
         <div
-          className="relative w-full flex justify-center items-center"
+          className="relative w-full flex justify-center items-center "
           style={{ overflowX: "auto", overflowY: "hidden" }}
         >
           <div
@@ -239,7 +213,7 @@ const SeatMap3: React.FC<SeatMap2Props> = ({
             style={{
               minWidth: "800px",
               paddingBottom: "20px",
-              transform: `scale(${zoomLevel})`,
+              transform: `scale(0.25)`,
               transformOrigin: "center top",
             }}
           >
@@ -700,4 +674,4 @@ const SeatMap3: React.FC<SeatMap2Props> = ({
   );
 };
 
-export default SeatMap3;
+export default SeatMap5;
