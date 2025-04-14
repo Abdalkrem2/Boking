@@ -14,7 +14,7 @@ interface SeatMap2Props {
   TYPE_COLORS: { id: number; value: string; name: string }[];
 }
 
-const SeatMap5: React.FC<SeatMap2Props> = ({
+const SeatMap4: React.FC<SeatMap2Props> = ({
   seats = [],
   onSeatSelect,
   selectedSeats = [],
@@ -712,4 +712,4 @@ const SeatMap5: React.FC<SeatMap2Props> = ({
   );
 };
 
-export default SeatMap5;
+export default SeatMap4;
