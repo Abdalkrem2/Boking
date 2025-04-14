@@ -53,7 +53,7 @@ function Header() {
     dispatch(
       initializeApi({
         id: 1,
-        db_link: "http://localhost:8000/",
+        db_link: "https://backend.eventat.io/",
         name: "Not",
         nameAr: "Not",
       })
