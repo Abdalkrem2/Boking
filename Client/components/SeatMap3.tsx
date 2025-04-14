@@ -204,7 +204,7 @@ const SeatMap3: React.FC<SeatMap2Props> = ({
 
   // Handle zoom in/out
   const handleZoomIn = () => {
-    setZoomLevel((prev) => Math.min(prev + 0.1, 2));
+    setZoomLevel((prev) => Math.min(prev + 0.1, 1.5));
   };
 
   const handleZoomOut = () => {
@@ -212,11 +212,7 @@ const SeatMap3: React.FC<SeatMap2Props> = ({
   };
 
   return (
-    <div
-      dir="rtl"
-      className="flex flex-col items-center w-full"
-      ref={containerRef}
-    >
+    <div className="flex flex-col items-center w-full" ref={containerRef}>
       {/* Zoom controls */}
       <div className="mb-2 flex justify-end w-full">
         <button
@@ -237,17 +233,9 @@ const SeatMap3: React.FC<SeatMap2Props> = ({
         <div
           className="relative w-full flex justify-center items-center"
           style={{ overflowX: "auto", overflowY: "hidden" }}
-          ref={(ref) => {
-            if (ref) {
-              // Center the scroll position
-              const totalWidth = ref.scrollWidth;
-              const viewportWidth = ref.clientWidth;
-              ref.scrollLeft = (totalWidth - viewportWidth) / 2;
-            }
-          }}
         >
           <div
-            className="min-w-full max-h-96"
+            className="min-w-full"
             style={{
               minWidth: "800px",
               paddingBottom: "20px",
