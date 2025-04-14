@@ -14,7 +14,7 @@ interface SeatMap2Props {
   TYPE_COLORS: { id: number; value: string; name: string }[];
 }
 
-const SeatMap4: React.FC<SeatMap2Props> = ({
+const SeatMap5: React.FC<SeatMap2Props> = ({
   seats = [],
   onSeatSelect,
   selectedSeats = [],
@@ -23,7 +23,7 @@ const SeatMap4: React.FC<SeatMap2Props> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredSeat, setHoveredSeat] = useState<Seat | null>(null);
   const [containerWidth, setContainerWidth] = useState(0);
-  const [zoomLevel, setZoomLevel] = useState(0.5);
+  const [zoomLevel, setZoomLevel] = useState(0.25);
 
   // Generate sample seats if none provided (for demonstration)
   const getSeats = () => {
@@ -49,8 +49,6 @@ const SeatMap4: React.FC<SeatMap2Props> = ({
       "N",
       "O",
       "P",
-      "Q",
-      "R",
     ];
 
     let id = 1;
@@ -210,7 +208,7 @@ const SeatMap4: React.FC<SeatMap2Props> = ({
   };
 
   const handleZoomOut = () => {
-    setZoomLevel((prev) => Math.max(prev - 0.1, 0.5));
+    setZoomLevel((prev) => Math.max(prev - 0.1, 0.25));
   };
 
   return (
@@ -237,11 +235,19 @@ const SeatMap4: React.FC<SeatMap2Props> = ({
 
       <div className="w-full bg-gray-900 p-2 md:p-4 rounded-lg overflow-hidden">
         <div
-          className="relative w-full"
+          className="relative w-full flex justify-center items-center"
           style={{ overflowX: "auto", overflowY: "hidden" }}
+          ref={(ref) => {
+            if (ref) {
+              // Center the scroll position
+              const totalWidth = ref.scrollWidth;
+              const viewportWidth = ref.clientWidth;
+              ref.scrollLeft = (totalWidth - viewportWidth) / 2;
+            }
+          }}
         >
           <div
-            className="min-w-full"
+            className="min-w-full max-h-96"
             style={{
               minWidth: "800px",
               paddingBottom: "20px",
@@ -261,9 +267,8 @@ const SeatMap4: React.FC<SeatMap2Props> = ({
 
             <div className="flex flex-col items-center">
               {/* Main theater sections */}
-              <div className="flex justify-center w-full mb-12 gap-20">
-                {/* Left section */}
-                <div className="mx-4">
+              <div className="flex justify-center w-full mb-12 gap-2">
+                <div className="mx-4 skew-x-12">
                   {Object.keys(groupedSeats.L || {})
                     .sort()
                     .map((row, rowIndex) => (
@@ -311,9 +316,58 @@ const SeatMap4: React.FC<SeatMap2Props> = ({
                       </div>
                     ))}
                 </div>
+                {/* Center section */}
+                <div className="mx-4">
+                  {Object.keys(groupedSeats.C || {})
+                    .sort()
+                    .map((row, rowIndex) => (
+                      <div
+                        key={`C${row}`}
+                        className="flex justify-center"
+                        style={{
+                          marginBottom: `${seatSpacing}px`,
+                          transform: `translateY(${
+                            rowIndex * 3
+                          }px) perspective(300px) rotateX(${
+                            5 + rowIndex * 0.5
+                          }deg)`,
+                        }}
+                      >
+                        <div className="text-xs text-gray-400 mr-2">{row}</div>
+                        {groupedSeats.C[row].map((seat) => (
+                          <div
+                            key={seat.id}
+                            className="flex items-center justify-center cursor-pointer rounded-full transition-colors"
+                            style={{
+                              width: `${seatSize}px`,
+                              height: `${seatSize}px`,
+                              backgroundColor: getSeatColor(seat),
+                              margin: `0 ${seatSpacing / 2}px`,
+                              border: "1px solid rgba(255,255,255,0.2)",
+                              boxShadow:
+                                hoveredSeat?.id === seat.id
+                                  ? "0 0 5px rgba(255,255,255,0.5)"
+                                  : "none",
+                            }}
+                            onClick={() => handleSeatClick(seat)}
+                            onMouseEnter={() => setHoveredSeat(seat)}
+                            onMouseLeave={() => setHoveredSeat(null)}
+                            title={`${seat.name} - ${
+                              seat.state === 1
+                                ? "Booked"
+                                : seat.state === 2
+                                ? "Unavailable"
+                                : "Available"
+                            }`}
+                          />
+                        ))}
+                        <div className="text-xs text-gray-400 ml-2">{row}</div>
+                      </div>
+                    ))}
+                </div>
 
                 {/* Right section */}
-                <div className="mx-4">
+                <div className="mx-4 -skew-x-12">
                   {Object.keys(groupedSeats.R || {})
                     .sort()
                     .map((row, rowIndex) => (
@@ -362,8 +416,208 @@ const SeatMap4: React.FC<SeatMap2Props> = ({
                     ))}
                 </div>
               </div>
+              {/* Front section */}
+              <div className="mx-4 my-10">
+                <div className="text-sm text-gray-500 text-center mb-1">
+                  Front Section
+                </div>
+                {Object.keys(groupedSeats.F || {})
+                  .sort()
+                  .map((row, rowIndex) => (
+                    <div
+                      key={`F${row}`}
+                      className="flex justify-center"
+                      style={{
+                        marginBottom: `${seatSpacing}px`,
+                        transform: `translateY(${
+                          rowIndex * 3
+                        }px) perspective(300px) rotateX(${
+                          5 + rowIndex * 0.5
+                        }deg)`,
+                      }}
+                    >
+                      <div className="text-xs text-gray-400 mr-2">{row}</div>
+                      {groupedSeats.F[row].map((seat) => (
+                        <div
+                          key={seat.id}
+                          className="flex items-center justify-center cursor-pointer rounded-full transition-colors"
+                          style={{
+                            width: `${seatSize}px`,
+                            height: `${seatSize}px`,
+                            backgroundColor: getSeatColor(seat),
+                            margin: `0 ${seatSpacing / 2}px`,
+                            border: "1px solid rgba(255,255,255,0.2)",
+                            boxShadow:
+                              hoveredSeat?.id === seat.id
+                                ? "0 0 5px rgba(255,255,255,0.5)"
+                                : "none",
+                          }}
+                          onClick={() => handleSeatClick(seat)}
+                          onMouseEnter={() => setHoveredSeat(seat)}
+                          onMouseLeave={() => setHoveredSeat(null)}
+                          title={`${seat.name} - ${
+                            seat.state === 1
+                              ? "Booked"
+                              : seat.state === 2
+                              ? "Unavailable"
+                              : "Available"
+                          }`}
+                        />
+                      ))}
+                      <div className="text-xs text-gray-400 ml-2">{row}</div>
+                    </div>
+                  ))}
+              </div>
             </div>
+            <div className="flex justify-center w-full mt-5 gap-2">
+              <div className="mx-4 skew-x-12">
+                {Object.keys(groupedSeats.Q || {})
+                  .sort()
+                  .map((row, rowIndex) => (
+                    <div
+                      key={`Q${row}`}
+                      className="flex justify-end"
+                      style={{
+                        marginBottom: `${seatSpacing}px`,
+                        transform: `translateY(${
+                          rowIndex * 3
+                        }px) perspective(300px) rotateX(${
+                          5 + rowIndex * 0.5
+                        }deg)`,
+                      }}
+                    >
+                      <div className="text-xs text-gray-400 mr-2">{row}</div>
+                      {groupedSeats.Q[row].map((seat) => (
+                        <div
+                          key={seat.id}
+                          className="flex items-center justify-center cursor-pointer rounded-full transition-colors"
+                          style={{
+                            width: `${seatSize}px`,
+                            height: `${seatSize}px`,
+                            backgroundColor: getSeatColor(seat),
+                            margin: `0 ${seatSpacing / 2}px`,
+                            border: "1px solid rgba(255,255,255,0.2)",
+                            boxShadow:
+                              hoveredSeat?.id === seat.id
+                                ? "0 0 5px rgba(255,255,255,0.5)"
+                                : "none",
+                          }}
+                          onClick={() => handleSeatClick(seat)}
+                          onMouseEnter={() => setHoveredSeat(seat)}
+                          onMouseLeave={() => setHoveredSeat(null)}
+                          title={`${seat.name} - ${
+                            seat.state === 1
+                              ? "Booked"
+                              : seat.state === 2
+                              ? "Unavailable"
+                              : "Available"
+                          }`}
+                        />
+                      ))}
+                      <div className="text-xs text-gray-400 ml-2">{row}</div>
+                    </div>
+                  ))}
+              </div>
+              {/* Center section */}
+              <div className="mx-4">
+                {Object.keys(groupedSeats.B || {})
+                  .sort()
+                  .map((row, rowIndex) => (
+                    <div
+                      key={`B${row}`}
+                      className="flex justify-center"
+                      style={{
+                        marginBottom: `${seatSpacing}px`,
+                        transform: `translateY(${
+                          rowIndex * 3
+                        }px) perspective(300px) rotateX(${
+                          5 + rowIndex * 0.5
+                        }deg)`,
+                      }}
+                    >
+                      <div className="text-xs text-gray-400 mr-2">{row}</div>
+                      {groupedSeats.B[row].map((seat) => (
+                        <div
+                          key={seat.id}
+                          className="flex items-center justify-center cursor-pointer rounded-full transition-colors"
+                          style={{
+                            width: `${seatSize}px`,
+                            height: `${seatSize}px`,
+                            backgroundColor: getSeatColor(seat),
+                            margin: `0 ${seatSpacing / 2}px`,
+                            border: "1px solid rgba(255,255,255,0.2)",
+                            boxShadow:
+                              hoveredSeat?.id === seat.id
+                                ? "0 0 5px rgba(255,255,255,0.5)"
+                                : "none",
+                          }}
+                          onClick={() => handleSeatClick(seat)}
+                          onMouseEnter={() => setHoveredSeat(seat)}
+                          onMouseLeave={() => setHoveredSeat(null)}
+                          title={`${seat.name} - ${
+                            seat.state === 1
+                              ? "Booked"
+                              : seat.state === 2
+                              ? "Unavailable"
+                              : "Available"
+                          }`}
+                        />
+                      ))}
+                      <div className="text-xs text-gray-400 ml-2">{row}</div>
+                    </div>
+                  ))}
+              </div>
 
+              {/* Right section */}
+              <div className="mx-4 -skew-x-12">
+                {Object.keys(groupedSeats.P || {})
+                  .sort()
+                  .map((row, rowIndex) => (
+                    <div
+                      key={`P${row}`}
+                      className="flex justify-start"
+                      style={{
+                        marginBottom: `${seatSpacing}px`,
+                        transform: `translateY(${
+                          rowIndex * 3
+                        }px) perspective(300px) rotateX(${
+                          5 + rowIndex * 0.5
+                        }deg)`,
+                      }}
+                    >
+                      <div className="text-xs text-gray-400 mr-2">{row}</div>
+                      {groupedSeats.P[row].map((seat) => (
+                        <div
+                          key={seat.id}
+                          className="flex items-center justify-center cursor-pointer rounded-full transition-colors"
+                          style={{
+                            width: `${seatSize}px`,
+                            height: `${seatSize}px`,
+                            backgroundColor: getSeatColor(seat),
+                            margin: `0 ${seatSpacing / 2}px`,
+                            border: "1px solid rgba(255,255,255,0.2)",
+                            boxShadow:
+                              hoveredSeat?.id === seat.id
+                                ? "0 0 5px rgba(255,255,255,0.5)"
+                                : "none",
+                          }}
+                          onClick={() => handleSeatClick(seat)}
+                          onMouseEnter={() => setHoveredSeat(seat)}
+                          onMouseLeave={() => setHoveredSeat(null)}
+                          title={`${seat.name} - ${
+                            seat.state === 1
+                              ? "Booked"
+                              : seat.state === 2
+                              ? "Unavailable"
+                              : "Available"
+                          }`}
+                        />
+                      ))}
+                      <div className="text-xs text-gray-400 ml-2">{row}</div>
+                    </div>
+                  ))}
+              </div>
+            </div>
             {/* <div className="mb-12">
               <div className="text-sm text-gray-500 text-center mb-1">
                 Back Section
@@ -458,4 +712,4 @@ const SeatMap4: React.FC<SeatMap2Props> = ({
   );
 };
 
-export default SeatMap4;
+export default SeatMap5;
