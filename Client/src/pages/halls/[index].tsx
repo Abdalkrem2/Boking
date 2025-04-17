@@ -34,8 +34,9 @@ function Hall() {
     axios
       .get(`${db_link}api/normal/hall/${productId}`)
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data.hall.main_hall_number);
         if (res.data.hall.main_hall_number == 1) {
+          setProductData(res.data.hall);
           router.push(`/arena/${productId}`);
           return;
         }
