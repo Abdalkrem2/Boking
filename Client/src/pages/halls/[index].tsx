@@ -35,6 +35,10 @@ function Hall() {
       .get(`${db_link}api/normal/hall/${productId}`)
       .then((res) => {
         console.log(res.data);
+        if (res.data.hall.main_hall_number == 1) {
+          router.push(`/arena/${productId}`);
+          return;
+        }
         setProductData(res.data.hall);
         let tempTypes: any = [];
         res.data.types.map((type: any, idx: number) => {
