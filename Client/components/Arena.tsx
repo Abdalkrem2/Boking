@@ -21,17 +21,17 @@ interface SeatMap2Props {
 }
 
 const colors = [
-  "#805AD5", // Purple
-  "#F6AD55", // Orange
-  "#ECC94B", // Yellow
-  "#48BB78", // Green
-  "#4299E1", // Blue
-  "#F56565", // Red
-  "#9F7AEA", // Lavender
-  "#ED64A6", // Pink
-  "#38B2AC", // Teal
-  "#667EEA", // Indigo
-  "#F97316", // Orange-red
+  "#e91e63", // VVIP
+  "#b71c1c", // VIP
+  "#689f38", // Royal
+  "#03a9f4", // Diamond A
+  "#0d47a1", // Diamond B
+  "#7b1fa2", // Platinum A
+  "#ba68c8", // Platinum B
+  "#fbc02d", // Gold
+  "#a4a4a1", // Silver
+  "#ff6f00", // Bronze
+  "#0d47a1", // Special Needs
 ];
 
 const Arena: React.FC<SeatMap2Props> = ({
@@ -226,7 +226,7 @@ const Arena: React.FC<SeatMap2Props> = ({
     if (isSelected) {
       return "#1976D2"; // Blue for selected
     } else if (seat.state === 1) {
-      return "#757575"; // Grey for booked
+      return "#000000"; // black for booked
     } else if (seat.state === 2) {
       return "#424242"; // Dark grey for unavailable
     } else {
@@ -374,14 +374,14 @@ const Arena: React.FC<SeatMap2Props> = ({
                     <div className="flex flex-col items-between justify-between w-full ">
                       {/* TOP*/}
                       <div className="flex justify-center items-end w-full mb-12  gap-10">
-                        {/* Right 1 (A,j) */}
+                        {/* Right 1 (A,x) */}
                         <div className="pb-6">
                           <div className="mb-3">
-                            {Object.keys(groupedSeats.j || {})
+                            {Object.keys(groupedSeats.x || {})
                               .sort()
                               .map((row, rowIndex) => (
                                 <div
-                                  key={`j${row}`}
+                                  key={`x${row}`}
                                   className="flex justify-around px-2"
                                   style={{
                                     marginBottom: `${seatSpacing}px`,
@@ -392,7 +392,7 @@ const Arena: React.FC<SeatMap2Props> = ({
                                     }deg)`,
                                   }}
                                 >
-                                  {groupedSeats.j[row].map((seat) => (
+                                  {groupedSeats.x[row].map((seat) => (
                                     <div
                                       key={seat.id}
                                       className="flex items-center justify-center cursor-pointer rounded-full transition-colors"
@@ -759,14 +759,14 @@ const Arena: React.FC<SeatMap2Props> = ({
                               ))}
                           </div>
                         </div>
-                        {/* Right 4 (F,m) */}
+                        {/* Right 4 (F,x) */}
                         <div className="pb-6">
                           <div className="mb-3">
-                            {Object.keys(groupedSeats.m || {})
+                            {Object.keys(groupedSeats.x || {})
                               .sort()
                               .map((row, rowIndex) => (
                                 <div
-                                  key={`m${row}`}
+                                  key={`x${row}`}
                                   className="flex justify-around px-2"
                                   style={{
                                     marginBottom: `${seatSpacing}px`,
@@ -777,7 +777,7 @@ const Arena: React.FC<SeatMap2Props> = ({
                                     }deg)`,
                                   }}
                                 >
-                                  {groupedSeats.m[row].map((seat) => (
+                                  {groupedSeats.x[row].map((seat) => (
                                     <div
                                       key={seat.id}
                                       className="flex items-center justify-center cursor-pointer rounded-full transition-colors"
@@ -1333,7 +1333,7 @@ const Arena: React.FC<SeatMap2Props> = ({
                                 ))}
                             </div>
                           </div>
-                          {/*  (e) */}
+                          {/*  (d) */}
                           <div className="-rotate-90 flex items-end pb-12  ml-44">
                             <div className="">
                               {Object.keys(groupedSeats.d || {})
@@ -1607,7 +1607,7 @@ const Arena: React.FC<SeatMap2Props> = ({
                       </div>
                       {/* BOTTOM*/}
                       <div className="flex justify-center items-start w-full mb-12 gap-8">
-                        {/* Right 1 (V,_A) */}
+                        {/* Right 1 (V,x) */}
                         <div className="">
                           <div className="">
                             {Object.keys(groupedSeats.V || {})
@@ -1657,11 +1657,11 @@ const Arena: React.FC<SeatMap2Props> = ({
                               ))}
                           </div>
                           <div className="mt-16">
-                            {Object.keys(groupedSeats.j || {})
+                            {Object.keys(groupedSeats.x || {})
                               .sort()
                               .map((row, rowIndex) => (
                                 <div
-                                  key={`j${row}`}
+                                  key={`x${row}`}
                                   className="flex justify-around px-2"
                                   style={{
                                     marginBottom: `${seatSpacing}px`,
@@ -1672,7 +1672,7 @@ const Arena: React.FC<SeatMap2Props> = ({
                                     }deg)`,
                                   }}
                                 >
-                                  {groupedSeats.j[row].map((seat) => (
+                                  {groupedSeats.x[row].map((seat) => (
                                     <div
                                       key={seat.id}
                                       className="flex items-center justify-center cursor-pointer rounded-full transition-colors"
@@ -1704,15 +1704,15 @@ const Arena: React.FC<SeatMap2Props> = ({
                               ))}
                           </div>
                         </div>
-                        {/* Right 2 (_C,U,z) */}
+                        {/* Right 2 (j,U,z) */}
                         <div>
-                          {/* _C */}
+                          {/*  j */}
                           <div className="">
-                            {Object.keys(groupedSeats.B || {})
+                            {Object.keys(groupedSeats.j || {})
                               .sort()
                               .map((row, rowIndex) => (
                                 <div
-                                  key={`B${row}`}
+                                  key={`j${row}`}
                                   className="flex justify-start"
                                   style={{
                                     marginBottom: `${seatSpacing}px`,
@@ -1723,7 +1723,7 @@ const Arena: React.FC<SeatMap2Props> = ({
                                     }deg)`,
                                   }}
                                 >
-                                  {groupedSeats.B[row].map((seat) => (
+                                  {groupedSeats.j[row].map((seat) => (
                                     <div
                                       key={seat.id}
                                       className="flex items-center justify-center cursor-pointer rounded-full transition-colors"
@@ -1849,15 +1849,15 @@ const Arena: React.FC<SeatMap2Props> = ({
                               ))}
                           </div>
                         </div>
-                        {/* Right 3 (_B,T,y) */}
+                        {/* Right 3 (m,T,y) */}
                         <div>
-                          {/* _B */}
+                          {/* m */}
                           <div className="">
-                            {Object.keys(groupedSeats.D || {})
+                            {Object.keys(groupedSeats.m || {})
                               .sort()
                               .map((row, rowIndex) => (
                                 <div
-                                  key={`D${row}`}
+                                  key={`m${row}`}
                                   className="flex justify-end"
                                   style={{
                                     marginBottom: `${seatSpacing}px`,
@@ -1868,7 +1868,7 @@ const Arena: React.FC<SeatMap2Props> = ({
                                     }deg)`,
                                   }}
                                 >
-                                  {groupedSeats.D[row].map((seat) => (
+                                  {groupedSeats.m[row].map((seat) => (
                                     <div
                                       key={seat.id}
                                       className="flex items-center justify-center cursor-pointer rounded-full transition-colors"
@@ -2091,14 +2091,14 @@ const Arena: React.FC<SeatMap2Props> = ({
                               ))}
                           </div>
                         </div>
-                        {/* Right 5 (H,n) */}
+                        {/* Right 5 (R,w) */}
                         <div className="flex flex-col self-end pt-8">
                           <div className="">
-                            {Object.keys(groupedSeats.H || {})
+                            {Object.keys(groupedSeats.R || {})
                               .sort()
                               .map((row, rowIndex) => (
                                 <div
-                                  key={`H${row}`}
+                                  key={`R${row}`}
                                   className="flex justify-start "
                                   style={{
                                     marginBottom: `${seatSpacing}px`,
@@ -2109,7 +2109,7 @@ const Arena: React.FC<SeatMap2Props> = ({
                                     }deg)`,
                                   }}
                                 >
-                                  {groupedSeats.H[row].map((seat) => (
+                                  {groupedSeats.R[row].map((seat) => (
                                     <div
                                       key={seat.id}
                                       className="flex items-center justify-center cursor-pointer rounded-full transition-colors"
@@ -2141,11 +2141,11 @@ const Arena: React.FC<SeatMap2Props> = ({
                               ))}
                           </div>
                           <div className="mt-8 -skew-x-12 rotate-180">
-                            {Object.keys(groupedSeats.n || {})
+                            {Object.keys(groupedSeats.w || {})
                               .sort()
                               .map((row, rowIndex) => (
                                 <div
-                                  key={`n${row}`}
+                                  key={`w${row}`}
                                   className="flex justify-start px-2"
                                   style={{
                                     marginBottom: `${seatSpacing}px`,
@@ -2156,7 +2156,7 @@ const Arena: React.FC<SeatMap2Props> = ({
                                     }deg)`,
                                   }}
                                 >
-                                  {groupedSeats.n[row].map((seat) => (
+                                  {groupedSeats.w[row].map((seat) => (
                                     <div
                                       key={seat.id}
                                       className="flex items-center justify-center cursor-pointer rounded-full transition-colors"
@@ -2292,15 +2292,15 @@ const Arena: React.FC<SeatMap2Props> = ({
                           </div>
                         </div>
 
-                        {/* Left-Top 2 (K,q) */}
+                        {/* Left-Top 2 (p,J) */}
                         <div className="">
                           <div className="flex flex-col gap-2">
-                            {Object.keys(groupedSeats.o || {})
+                            {Object.keys(groupedSeats.p || {})
                               .sort()
                               .map((row, rowIndex) => (
                                 <div
-                                  key={`o${row}`}
-                                  className="flex justify-end"
+                                  key={`p${row}`}
+                                  className="flex justify-start"
                                   style={{
                                     marginBottom: `${seatSpacing}px`,
                                     transform: `translateY(${
@@ -2310,7 +2310,7 @@ const Arena: React.FC<SeatMap2Props> = ({
                                     }deg)`,
                                   }}
                                 >
-                                  {groupedSeats.o[row].map((seat) => (
+                                  {groupedSeats.p[row].map((seat) => (
                                     <div
                                       key={seat.id}
                                       className="flex items-center justify-center cursor-pointer rounded-full transition-colors"
@@ -2342,11 +2342,11 @@ const Arena: React.FC<SeatMap2Props> = ({
                               ))}
                           </div>
                           <div className=" mt-10  rotate-180">
-                            {Object.keys(groupedSeats.I || {})
+                            {Object.keys(groupedSeats.J || {})
                               .sort()
                               .map((row, rowIndex) => (
                                 <div
-                                  key={`I${row}`}
+                                  key={`J${row}`}
                                   className="flex justify-end"
                                   style={{
                                     marginBottom: `${seatSpacing}px`,
@@ -2357,7 +2357,7 @@ const Arena: React.FC<SeatMap2Props> = ({
                                     }deg)`,
                                   }}
                                 >
-                                  {groupedSeats.I[row].map((seat) => (
+                                  {groupedSeats.J[row].map((seat) => (
                                     <div
                                       key={seat.id}
                                       className="flex items-center justify-center cursor-pointer rounded-full transition-colors"
@@ -2489,7 +2489,7 @@ const Arena: React.FC<SeatMap2Props> = ({
                               ))}
                           </div>
                         </div>
-                        {/* Left 2 (A,j) */}
+                        {/* Left 2 (r,L) */}
                         <div className=" -rotate-90">
                           <div className="mb-3">
                             {Object.keys(groupedSeats.r || {})
@@ -2586,14 +2586,14 @@ const Arena: React.FC<SeatMap2Props> = ({
                               ))}
                           </div>
                         </div>
-                        {/* Left 3 (A,j) */}
+                        {/* Left 3 (s,M) */}
                         <div className=" -rotate-90">
                           <div className="mb-3">
-                            {Object.keys(groupedSeats.r || {})
+                            {Object.keys(groupedSeats.s|| {})
                               .sort()
                               .map((row, rowIndex) => (
                                 <div
-                                  key={`r${row}`}
+                                  key={`s${row}`}
                                   className="flex justify-around px-2"
                                   style={{
                                     marginBottom: `${seatSpacing}px`,
@@ -2604,7 +2604,7 @@ const Arena: React.FC<SeatMap2Props> = ({
                                     }deg)`,
                                   }}
                                 >
-                                  {groupedSeats.r[row].map((seat) => (
+                                  {groupedSeats.s[row].map((seat) => (
                                     <div
                                       key={seat.id}
                                       className="flex items-center justify-center cursor-pointer rounded-full transition-colors"
@@ -2636,11 +2636,11 @@ const Arena: React.FC<SeatMap2Props> = ({
                               ))}
                           </div>
                           <div className="">
-                            {Object.keys(groupedSeats.L || {})
+                            {Object.keys(groupedSeats.M || {})
                               .sort()
                               .map((row, rowIndex) => (
                                 <div
-                                  key={`L${row}`}
+                                  key={`M${row}`}
                                   className="flex justify-end"
                                   style={{
                                     marginBottom: `${seatSpacing}px`,
@@ -2651,7 +2651,7 @@ const Arena: React.FC<SeatMap2Props> = ({
                                     }deg)`,
                                   }}
                                 >
-                                  {groupedSeats.L[row].map((seat) => (
+                                  {groupedSeats.M[row].map((seat) => (
                                     <div
                                       key={seat.id}
                                       className="flex items-center justify-center cursor-pointer rounded-full transition-colors"
@@ -2783,14 +2783,14 @@ const Arena: React.FC<SeatMap2Props> = ({
                       </div>
                       {/* Bottom*/}
                       <div className="flex flex-row items-start justify-end w-full gap-20 -mr-28  -rotate-[135deg]">
-                        {/* Left-Top 1 (I,o) */}
+                        {/* Left-Top 1 (P,u) */}
                         <div className="">
                           <div className="flex flex-col gap-2">
-                            {Object.keys(groupedSeats.o || {})
+                            {Object.keys(groupedSeats.u || {})
                               .sort()
                               .map((row, rowIndex) => (
                                 <div
-                                  key={`o${row}`}
+                                  key={`u${row}`}
                                   className="flex justify-end"
                                   style={{
                                     marginBottom: `${seatSpacing}px`,
@@ -2801,7 +2801,7 @@ const Arena: React.FC<SeatMap2Props> = ({
                                     }deg)`,
                                   }}
                                 >
-                                  {groupedSeats.o[row].map((seat) => (
+                                  {groupedSeats.u[row].map((seat) => (
                                     <div
                                       key={seat.id}
                                       className="flex items-center justify-center cursor-pointer rounded-full transition-colors"
@@ -2833,11 +2833,11 @@ const Arena: React.FC<SeatMap2Props> = ({
                               ))}
                           </div>
                           <div className=" mt-10  rotate-180">
-                            {Object.keys(groupedSeats.I || {})
+                            {Object.keys(groupedSeats.P || {})
                               .sort()
                               .map((row, rowIndex) => (
                                 <div
-                                  key={`I${row}`}
+                                  key={`P${row}`}
                                   className="flex justify-start"
                                   style={{
                                     marginBottom: `${seatSpacing}px`,
@@ -2848,7 +2848,7 @@ const Arena: React.FC<SeatMap2Props> = ({
                                     }deg)`,
                                   }}
                                 >
-                                  {groupedSeats.I[row].map((seat) => (
+                                  {groupedSeats.P[row].map((seat) => (
                                     <div
                                       key={seat.id}
                                       className="flex items-center justify-center cursor-pointer rounded-full transition-colors"
@@ -2930,12 +2930,13 @@ const Arena: React.FC<SeatMap2Props> = ({
                                 </div>
                               ))}
                           </div>
+                         
                           <div className=" mt-10  rotate-180">
-                            {Object.keys(groupedSeats.I || {})
+                            {Object.keys(groupedSeats.Q || {})
                               .sort()
                               .map((row, rowIndex) => (
                                 <div
-                                  key={`I${row}`}
+                                  key={`Q${row}`}
                                   className="flex justify-end"
                                   style={{
                                     marginBottom: `${seatSpacing}px`,
@@ -2946,7 +2947,7 @@ const Arena: React.FC<SeatMap2Props> = ({
                                     }deg)`,
                                   }}
                                 >
-                                  {groupedSeats.I[row].map((seat) => (
+                                  {groupedSeats.Q[row].map((seat) => (
                                     <div
                                       key={seat.id}
                                       className="flex items-center justify-center cursor-pointer rounded-full transition-colors"
