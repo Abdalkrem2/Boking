@@ -82,7 +82,7 @@ function Slider() {
 
   if (isLoading) {
     return (
-      <div className="w-full h-64 flex items-center justify-center bg-main-color/10 sm:rounded-xl">
+      <div className="w-full h-52 flex items-center justify-center bg-main-color/10 sm:rounded-xl">
         <div className="relative">
           <div className="absolute animate-spin rounded-full h-16 w-16 border-4 border-main-color/30"></div>
           <div className="animate-spin rounded-full h-16 w-16 border-4 border-transparent border-t-main-color border-l-main-color"></div>
@@ -100,7 +100,7 @@ function Slider() {
   }
 
   return (
-    <section className="relative h-[240px] md:h-[520px] w-full">
+    <section className="relative h-[240px] md:h-[450px] w-full">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         navigation={{
