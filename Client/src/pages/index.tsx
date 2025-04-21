@@ -27,7 +27,7 @@ const Home = () => {
         <title>{t === enUS ? "Eventat" : "ايفينتات"}</title>
         <link rel="icon" href="/NEPCart.ico" />
       </Head>
-      <div className="mx-4 sm:mx-10 md:mx-20 lg:mx-28 rounded-xl overflow-hidden my-5">
+      <div className="mx-4 sm:mx-10 md:mx-20 lg:mx-32 rounded-xl overflow-hidden my-5">
         <Slider />
       </div>
       <CardsSection />
